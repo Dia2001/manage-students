@@ -1,0 +1,477 @@
+﻿@model PagedList.IPagedList<QLSV.Models.Nganh>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutQLSV.cshtml";
+}
+<link href="~/Content/using.css" rel="stylesheet">
+<link href="~/Content/phantrang.css" rel="stylesheet">
+<style>
+    .fi {
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;
+        color: black;
+        cursor: pointer;
+        display: inline-block;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 14px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .timkhoa {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tim-1 {
+        margin: 0 10px;
+        width: 30%;
+    }
+
+    .text-end {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .nutbam {
+        margin: 0 10px;
+    }
+
+    .new {
+        display: flex;
+        align-items: center;
+    }
+
+    .antuong-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .text-end-1 .thep {
+        margin: 0 10px;
+    }
+
+    .thep p {
+        position: relative;
+    }
+
+    .nutbam--1 {
+        background-color: #37497e;
+    }
+
+    .xuatfile {
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 10px 16px;
+        text-align: center;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        justify-content: center;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .nut-xuat-file {
+        float: right;
+    }
+    select {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        list-style: none;
+        text-align: center;
+        font-family: Cambria;
+        font-weight: bold;
+        color: aliceblue;
+    }
+
+    option {
+        color: black;
+    }
+</style>
+
+<div class="card">
+
+    <div class="card-header mb-3">
+
+        <div class="form-wrapper">
+            <div class="header-content">
+                <strong style="font-size:30px;" class="text-uppercase">Danh sách ngành</strong>
+            </div>
+            <div class="text-end">
+                <div>
+                    <a href="@Url.Action("Trash", "Nganhs")" class="nutbam nutbam--1">
+                        Thùng rác
+                    </a>
+                </div>
+                <div>
+                    <a class="nutbam nutbam--1" id="them" data-bs-toggle="modal" data-bs-target="#mdlExam">
+                        Thêm
+                    </a>
+                </div>
+                <div class="xuatfile">
+                    @using (Html.BeginForm("XuatFile", "Nganhs", FormMethod.Post, htmlAttributes: new { @class = "antuong-content" }))
+                    {
+
+                        <div class="d-flex">
+                            <select class="form-select" id="StudentGender" name="file">
+                                <option value="1">Excel</option>
+                                <option value="2">Word</option>
+                                <option value="3">PDF</option>
+                            </select>
+                        </div>
+                        <div><button class="nutbam nutbam--1 nut-xuat-file">Xuất file</button></div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="d-flex mb-0" style="align-items:center;justify-content:space-between ">
+        
+            <div class="input-group d-flex">
+                <div class="form-outline">
+                    <input id="search" type="search" class="form-control" placeholder="Nhập tên ngành để tìm kiếm" />
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" style="background-color: #37497e;">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="timkhoa mb-0">
+                @using (Html.BeginForm("TimDrop", "Nganhs", FormMethod.Post, new { @class = "form-a" }))
+                {
+                    <div class="new">
+                        <div class="nutbam nutbam--1">
+                            @Html.DropDownList("MaKhoa", "Tất cả")
+                        </div>
+                        <div><input type="submit" value="Tìm" class="nutbam nutbam--1" /></div>
+                    </div>
+                }
+            </div>
+            <div class="timkhoa mb-0">
+
+
+                <div class="tim-2">
+                    @using (Html.BeginForm("Import", "Nganhs", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-a" }))
+                    {
+                        <div class="new">
+                            <div>
+                                <input type="file" name="file" class="fi" />
+                            </div>
+                            <div><input type="submit" value="Nhập file excel" class="nutbam nutbam--1" /></div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+            <div class="card-body p-3">
+                <table class="table table-bordered table-hover" id="result">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Mã ngành</th>
+                            <th class="text-center">Tên ngành</th>
+                            <th class="text-center">Tên khoa</th>
+                            <th class="text-center">Tổng số tín chỉ</th>
+                            <th class="text-center">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="@item.MaNganh">
+                                <td>@item.MaNganh</td>
+                                <td>@item.TenNganh</td>
+                                <td>@item.Khoa.TenKhoa</td>
+                                <td>@item.TongSTC</td>
+                                <td>
+                                    <a id="sua" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#mdlExam">
+                                        <i class="bi bi-brush"></i>
+                                    </a>
+                                    <a href="@Url.Action("DelTrash", new { id = item.MaNganh })" class="btn btn-danger">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <h5 id="view-bag">Số lượng ngành là: @ViewBag.SoLuong</h5>
+                <table class="table table-bordered table-hover " id="search-result" style="display:none">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Mã ngành</th>
+                            <th class="text-center">Tên ngành</th>
+                            <th class="text-center">Tên khoa</th>
+                            <th class="text-center">Tổng số tín chỉ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="main-data">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <a href="@Url.Action("Index", "Nganhs")">
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+        </a>
+        <script type="text/javascript">
+$(document).on('click', '#sua', function () {
+        var trid = $(this).closest('tr').attr('id');
+        console.log(trid);
+        getmanganh(trid);
+        $("#kiemtra").val(trid);
+    $("#txtMaNganh").attr('readonly', true);
+    });
+    function getmanganh (manganh){
+        $.ajax({
+            url: "@Url.Action("Getdata1", "Nganhs")",
+            type: "get", //pt get
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: {
+                id: manganh   //truyền tham số có giá trị bằng id makhoa
+            },
+            success: function (data) {
+                var q = jQuery.parseJSON(data); // ép về kiểu javascrip
+                console.log(q);
+                $('#txtMaNganh').val(q[0]['MaNganh']);// gán vulue cho ô input txt
+                $('#txtTenNganh').val(q[0]['TenNganh']);
+                $('#kiemtra1').val(q[0]['MaKhoa']);
+                $('#txtSoTinChi').val(q[0]['TongSTC']);
+                var a = $('#kiemtra1').val();
+                LoadDropKhoa(a);
+            }
+        });
+    }
+    function LoadDropKhoa(a) {
+        $.ajax({
+            url: "@Url.Action("Getdata2", "Nganhs")",
+            type: "get", //pt get
+            dataType: "json",
+            success: function (data) {
+                // convert string to JS object
+                var obj = JSON.parse(data);
+                // lấy topic id đầu tiên gán cho txtTopicID
+               //$('#giatrian').val(obj[0]['MaKhoa'])
+                console.log(obj);
+                $("#seltopic").empty();
+                if (a == "") {
+                    for (var i = 0; i < obj.length; i++) {
+                        let makhoa = obj[i]["MaKhoa"];
+                        $("#seltopic").append("<option value=" + makhoa + " >"
+                            + obj[i]["TenKhoa"] + "</option>");
+                    }
+                } else {
+                    for (var i = 0; i < obj.length; i++) {
+                        let makhoa = obj[i]["MaKhoa"];
+                        if (a == makhoa) {
+                            $("#seltopic").append("<option value=" + makhoa + " selected='selected'>"
+                                + obj[i]["TenKhoa"] + "</option>");
+                        } else {
+                            $("#seltopic").append("<option value=" + makhoa + ">"
+                                + obj[i]["TenKhoa"] + "</option>");
+                        }
+                    }
+                }
+            }
+        });
+    }
+    $(document).on('click', '#them', function () {
+        $('#txtMaNganh').attr("readonly", false);
+        $('#txtMaNganh').val('');
+        $('#txtTenNganh').val('');
+        $('#txtSoTinChi').val('');
+        $('#kiemtra').val('');
+        var a = $('#kiemtra1').val();
+        LoadDropKhoa(a);
+    });
+    $(document).on('click', '#btnSubmit', function () {
+        let makhoakiemtra = $('#kiemtra').val();
+        let manganh = $('#txtMaNganh').val();// lấy giá trị của txtarea có id là txtTenChudDe gán cho biến tenchude
+        let tennganh = $('#txtTenNganh').val();
+        let makhoa = $('#seltopic').val();
+        console.log(makhoa);
+        let sotinchi = $('#txtSoTinChi').val();
+        console.log("id là", makhoakiemtra);
+        if (manganh.length == 0 || makhoa.length == 0) {
+            alert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+        if (makhoakiemtra.length == 0) {
+            $.ajax({
+                url: '@Url.Action("AddData", "Nganhs")',
+                type: 'post',
+                data: {
+                    mn: manganh,
+                    tn: tennganh,
+                    mk: makhoa,
+                    stc: sotinchi
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            });
+        }
+        else {
+            $.ajax({
+                url: '@Url.Action("EditData", "Nganhs")',
+                type: 'post',
+                data: {
+                    mn: manganh,
+                    tn: tennganh,
+                    mk: makhoa,
+                    stc: sotinchi
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            });
+        }
+    });
+    $(document).ready(function () {
+        var inputElement = document.querySelector("#search");
+        console.log(inputElement);
+        inputElement.oninput = function (e) {
+            console.log(e.target.value);
+            search(e.target.value);
+        }
+    });
+    function search(keyword) {
+        $.ajax({
+             url: '@Url.Action("Getdata3", "Nganhs")',
+            type: 'post',
+            data: {
+                id: keyword,
+            },
+            success: function (data) {
+               var q = JSON.parse(data)
+                var htmldata = create(q)
+                if (keyword) {
+                    $("#result").css("display", "none");
+                    $("#search-result").css("display", "table");
+                    $("#view-bag").css("display", "none");
+                    $("#thea").css("display", "none");
+                    $("#main-data").html(htmldata);
+                    $(".pagination").css("display", "none");
+                } else {
+                    $("#result").css("display", "table");
+                    $("#search-result").css("display", "none");
+                    $("#view-bag").css("display", "flex");
+                    $(".pagination").css("display", "flex");
+                }
+            }
+            });
+    }
+    function create(data) {
+        let rows = [];
+
+        console.log(data);
+        for (var i = 0; i < data.length; i++)
+        {
+            //let max = jQuery(".dname").find("tr td:eq(1)").val();
+            let row = `<tr id="${data[i]["MaNganh"]}" class="dbname">
+ <td> ${data[i]["MaNganh"]} </td>
+        <td> ${data[i]["TenNganh"]} </td>
+        <td style='width:200px;'>${data[i]["TenKhoa"]}</td>
+        <td>${data[i]["TongSTC"]}</td>
+        <td align="center"><a id="sua" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#mdlExam"><i class="bi bi-brush"></i> </a>
+       <button   class="btn btn-danger" onclick="Xoa('${data[i]['MaNganh']}')"><i class="bi bi-trash-fill"></i></button></td>
+        </tr>`;
+ if (data[i]["MaNganh"]) {
+                rows.push(row);
+            }
+        }
+        return rows;
+    }
+    function Xoa(id) {
+
+        location = `/Nganhs/DelTrash/${id}`;
+    }
+
+
+        </script>
+        <div class="modal" id="mdlExam">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="mdlExamLabel">Ngành</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body" style="display: flex;flex-direction: column;align-items: center; justify-content:center">
+                        <input type="hidden" id="kiemtra" value="">
+                        <form>
+                            <div class="form-group">
+
+                                <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Mã ngành</label>
+                                <textarea style="width: 330px;" class="form-control" id="txtMaNganh" rows="1"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Tên ngành</label>
+                                <textarea style="width: 330px;" class="form-control" id="txtTenNganh" rows="1"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Khoa</label>
+                                <select class="form-select" id="seltopic" aria-label="Default select example">
+                                </select>
+                                <input type="hidden" id="kiemtra" value="">
+                                <input type="hidden" id="kiemtra1" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Tổng số tín chỉ</label>
+                                <textarea style="width: 330px;" class="form-control" id="txtSoTinChi" rows="1"></textarea>
+                            </div>
+                        </form>
+
+
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <a class="nutbam nutbam--1" id="btnSubmit">Xác nhận</a>
+                            <button class="nutbam nutbam--1" data-bs-dismiss="modal">Trở về</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>

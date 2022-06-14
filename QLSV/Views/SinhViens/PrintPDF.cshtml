@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "PrintPDF";
+
+}
+<style>
+    thead {
+        background-color: #00FF00;
+        color: black
+    }
+
+    table {
+        width: 100%;
+        border: 1px solid black;
+        font-size: 50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    td, th {
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    .rounded-circle {
+        width: 30px;
+        height: 30px;
+        background: #7fee1d;
+        -moz-border-radius: 60px;
+        -webkit-border-radius: 60px;
+        border-radius: 60px;
+    }
+</style>
+<table class="table table-bordered table-striped" border="1" style="border-color:black">
+    <thead>
+        <tr>
+            <th class="text-center">Mã sinh viên</th>
+            <th class="text-center">Họ đệm</th>
+            <th class="text-center">Tên</th>
+            <th class="text-center">Giới tính</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Ngày sinh</th>
+            <th class="text-center">Mật khẩu</th>
+            <th class="text-center">Lớp</th>
+            <th class="text-center">Hình ảnh</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+         
+                <tr >
+
+                    <td>@item.MaSV</td>
+                    <td>@item.HoDemSV</td>
+                    <td>@item.TenSV</td>
+                    @if (item.GioiTinh == false)
+                    {
+                        <td>Nữ</td>
+                    }
+                    else
+                    {
+                        <td>Nam</td>
+                    }
+                    <td>@item.Email</td>
+                    <td>@item.NgaySinh</td>
+                    <td>@item.MatKhau</td>
+                    <td>@item.Lop.TenLop</td>
+                    <td><img class="rounded-circle" src="~/Content/IMG/@item.HinhAnh" /></td>
+                </tr>
+
+            }
+    </tbody>
+</table>
+
+
+

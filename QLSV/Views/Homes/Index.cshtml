@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutQLSV.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="~/Content/HomeAdmin.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"></script>
+    <script src="~/Content/charts/highcharts.js"></script>
+    <script src="~/Content/charts/exporting.js"></script>
+</head>
+<body>
+    <div class="Header" style="margin-top: -10px;">
+        <h1>Chương trình quản lý sinh viên</h1>
+        <p>Hệ thống quản lý thông tin và công việc của phòng đào tạo trường Đại Học Quy Nhơn</p>
+    </div>
+    <form method="post">
+        <div class="info" style="position: absolute; z-index: 1000;">
+            <a target="blank" href="https://www.facebook.com/Ph%C3%B2ng-C%C3%B4ng-t%C3%A1c-ch%C3%ADnh-tr%E1%BB%8B-sinh-vi%C3%AAn-Tr%C6%B0%E1%BB%9Dng-%C4%90%E1%BA%A1i-h%E1%BB%8Dc-Quy-Nh%C6%A1n-810259772662168" class="buble-box button-29">
+                <img id="img-bubble-box" src="https://qnu.edu.vn/Resources/Images/0logoDHQNnew.jpg">
+            </a>
+        </div>
+    </form>
+
+    <figure class="highcharts-figure">
+        <div class="a" style="display:flex; justify-content:space-around;">
+            <div id="container"></div>
+            <div id="form-gr"></div>
+        </div>
+    </figure>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/Homes/GetKhoa", function (data) {
+                Highcharts.chart('form-gr', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Thống kê số ngành học'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: [{
+
+                            name: 'công nghệ thông tin',
+                            y: data.cntt
+                        }, {
+                            name: 'sư phạm',
+                            y: data.sp
+                        }, {
+                            name: 'Khoa học xã hội',
+                            y: data.khxh
+                        },
+                        {
+                            name: 'Giáo dục thể chất',
+                            y: data.gdtc
+                        },
+                        {
+                            name: 'Toán thông kê',
+                            y: data.toanthongke
+                        },
+                        {
+                            name: 'Lý luận chính trị-Luật và quản lý nhà nước',
+                            y: data.lyluanchinhtri
+                        },
+                        {
+                            name: 'Khoa học tự nhiên',
+                            y: data.khtn
+                        },
+                        {
+                            name: 'Quản trị kinh doanh',
+                            y: data.qtkd
+                        }]
+                    }]
+
+                });
+            });
+
+        });
+
+        $(document).ready(function () {
+            $.getJSON("/Homes/GetDiem", function (data) {
+                Highcharts.chart('container', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Thống kê số điểm'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: [{
+
+                            name: 'Điểm A',
+                            y: data.a
+                        }, {
+                            name: 'Điểm B',
+                            y: data.b
+                        }, {
+                            name: 'Điểm C',
+                            y: data.c
+                        },
+                        {
+                            name: 'Điểm D',
+                            y: data.d
+                        },
+                        {
+                            name: 'Điểm E',
+                            y: data.e
+                        },
+                        {
+                            name: 'Điểm F',
+                            y: data.f
+                        },
+                        {
+                            name: 'Điểm A cộng',
+                            y: data.acong
+                        },
+                        {
+                            name: 'Điểm B cộng',
+                            y: data.bcong
+                        }]
+                    }]
+
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>

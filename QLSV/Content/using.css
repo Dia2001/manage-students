@@ -1,0 +1,29 @@
+﻿.nutbam {
+    display: inline-block;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 5px;
+    transition: opacity 0.5s ease;
+    cursor: pointer;
+}
+
+.nutbam:hover {
+    color: #fff;
+    opacity: 0.5;
+}
+
+.nutbam--1 {
+    background-color: #04aa6d;
+}
+
+.nutbam--2 {
+    background-color: #dc3545;
+}
+
+.nutbam--3 {
+    background-color: #dc3545;
+}

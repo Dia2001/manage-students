@@ -1,0 +1,24 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">MaSV</th><th scope="col">HoDemSV</th><th scope="col">TenSV</th><th scope="col">MatKhau</th><th scope="col">HinhAnh</th><th scope="col">NgaySinh</th><th scope="col">GioiTinh</th><th scope="col">Email</th><th scope="col">Malop</th><th scope="col">TrangThai</th>
+		</tr><tr>
+			<td>4251050001</td><td>Nguyễn Văn</td><td>An</td><td>123</td><td>images (5).jpg</td><td>19/12/2001 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl02_ctl00_0" type="checkbox" name="ctl02$ctl00" checked="checked" disabled="disabled" /></span></td><td>nguyenvanan@gmail.com</td><td>CNTTK42A</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>4251050002</td><td>Nguyễn Thị</td><td>Hồng</td><td>1212</td><td>images (11).jpg</td><td>15/11/2001 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl03_ctl00_1" type="checkbox" name="ctl03$ctl00" disabled="disabled" /></span></td><td>nguyenthihong@gmail.com</td><td>CNTTK42A</td><td>1</td>
+		</tr><tr>
+			<td>4251050003</td><td>Nguyễn Văn </td><td>Dương</td><td>123</td><td>images (7).jpg</td><td>13/12/2001 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl04_ctl00_2" type="checkbox" name="ctl04$ctl00" checked="checked" disabled="disabled" /></span></td><td>nguyenvanduong@gmail.com</td><td>CNTTK42A</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>4251050004</td><td>Nguyễn Thu</td><td>Hằng</td><td>123</td><td>images (8).jpg</td><td>17/09/2001 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl05_ctl00_3" type="checkbox" name="ctl05$ctl00" disabled="disabled" /></span></td><td>nguyenthihang@gmail.com</td><td>CNTTK42B</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>4251050005</td><td>Nguyễn Ho&#224;ng</td><td>Vũ</td><td>123</td><td>images (9).jpg</td><td>31/01/2001 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl06_ctl00_4" type="checkbox" name="ctl06$ctl00" checked="checked" disabled="disabled" /></span></td><td>nguyenhoangvu@gmail.com</td><td>CNTTK42B</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>425105006</td><td>Nguyễn Hữu</td><td>Quang</td><td>123</td><td>images.jpg</td><td>12/11/2001 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl07_ctl00_5" type="checkbox" name="ctl07$ctl00" checked="checked" disabled="disabled" /></span></td><td>nguyenhuuquang@gmail.com</td><td>CNTTK42C</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>4251050099</td><td>Nguyễn Văn </td><td>H&#249;ng</td><td>123</td><td>images (2).jpg</td><td>19/12/2021 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl08_ctl00_6" type="checkbox" name="ctl08$ctl00" checked="checked" disabled="disabled" /></span></td><td>nguyenvanhung@gmail.com</td><td>CNTTK42C</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>4251050100</td><td>Lương</td><td>A</td><td>123</td><td>images (14).jpg</td><td>15/11/2001 12:00:00 AM</td><td><span class="aspNetDisabled" title="GioiTinh"><input id="ctl09_ctl00_7" type="checkbox" name="ctl09$ctl00" checked="checked" disabled="disabled" /></span></td><td>luongnguyen@gmail.com</td><td>CNTTK42A</td><td>&nbsp;</td>
+		</tr>
+	</table>
+</div>

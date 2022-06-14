@@ -1,0 +1,27 @@
+﻿.pagination li {
+    border: 1px solid #37497e;
+    list-style: none;
+    padding: 0 10px;
+    transition: 2s ease;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.PagedList-skipToPrevious, .PagedList-skipToNext {
+    display: none;
+}
+
+.pagination li.active {
+    background-color: #37497e;
+    color: white
+}
+
+.pagination li a {
+    text-decoration: none;
+    color: #37497e;
+    font-size: 20px;
+}

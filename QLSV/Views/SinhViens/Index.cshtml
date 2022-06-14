@@ -1,0 +1,565 @@
+﻿@model PagedList.IPagedList<QLSV.Models.SinhVien>
+@using PagedList.Mvc
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutQLSV.cshtml";
+    }
+<link href="~/Content/using.css" rel="stylesheet">
+<link href="~/Content/phantrang.css" rel="stylesheet">
+<style>
+    .fi {
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;
+        color: black;
+        cursor: pointer;
+        display: inline-block;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 14px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .timkhoa {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tim-1 {
+        margin: 0 10px;
+        width: 30%;
+    }
+
+    .text-end {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .nutbam {
+        margin: 0 10px;
+    }
+
+    .new {
+        display: flex;
+        align-items: center;
+    }
+
+    .antuong-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .text-end-1 .thep {
+        margin: 0 10px;
+    }
+
+    .thep p {
+        position: relative;
+    }
+
+    .nutbam--1 {
+        background-color: #37497e;
+    }
+
+    .xuatfile {
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 10px 16px;
+        text-align: center;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        justify-content: center;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .nut-xuat-file {
+        float: right;
+    }
+
+    select {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        list-style: none;
+        text-align: center;
+        font-family: Cambria;
+        font-weight: bold;
+        color: aliceblue;
+    }
+
+    option {
+        color: black;
+    }
+</style>
+
+<div class="card">
+
+    <div class="card-header mb-3">
+
+        <div class="form-wrapper">
+            <div class="header-content">
+                <strong style="font-size:30px;" class="text-uppercase">Danh sách sinh viên</strong>
+            </div>
+            <div class="text-end">
+                <div>
+                    <a href="@Url.Action("Trash", "SinhViens")" class="nutbam nutbam--1">
+                        Thùng rác
+                    </a>
+                </div>
+                <div>
+                    <a class="nutbam nutbam--1" id="them" data-bs-toggle="modal" data-bs-target="#mdlExam">
+                        Thêm
+                    </a>
+                </div>
+                <div class="xuatfile">
+                    @using (Html.BeginForm("XuatFile", "SinhViens", FormMethod.Post, htmlAttributes: new { @class = "antuong-content" }))
+                    {
+
+        <div class="d-flex">
+            <select class="form-select" id="StudentGender" name="file">
+                <option value="1">Excel</option>
+                <option value="2">Word</option>
+                <option value="3">PDF</option>
+            </select>
+        </div>
+                        <div><button class="nutbam nutbam--1 nut-xuat-file">Xuất file</button></div>}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="timkhoa mb-0">
+        <div class="input-group d-flex">
+            <div class="form-outline">
+                <input id="search" type="search" class="form-control" placeholder="Nhập mã sinh viên để tìm kiếm" />
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" style="background-color: #37497e;">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="input-group mb-0">
+            @using (Html.BeginForm("TimDrop", "SinhViens", FormMethod.Post, new { @class = "form-a" }))
+            {
+<div class="new">
+    <div class="nutbam nutbam--1">
+        @Html.DropDownList("MaLop", "Tất cả")
+    </div>
+    <div><input type="submit" value="Tìm kiếm" class="nutbam nutbam--1" /> </div>
+</div>  }
+        </div>
+
+
+        <div class="tim-2">
+            @using (Html.BeginForm("Import", "SinhViens", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-a" }))
+            {
+<div class="new">
+    <div>
+        <input type="file" name="file" class="fi" />
+    </div>
+    <div><input type="submit" value="Nhập file excel" class="nutbam nutbam--1" /></div>
+</div>  }
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body p-3">
+        <table class="table table-bordered table-hover" id="result">
+            <thead>
+                <tr>
+                    <th class="text-center">Mã sinh viên</th>
+                    <th class="text-center">Họ đệm</th>
+                    <th class="text-center">Tên</th>
+                    <th class="text-center">Giới tính</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Ngày sinh</th>
+                    <th class="text-center">Mật khẩu</th>
+                    <th class="text-center">Lớp</th>
+                    <th class="text-center">Hình ảnh</th>
+                    <th class="text-center">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr id="@item.MaSV">
+        <td class="text-center">@item.MaSV</td>
+        <td class="text-center">@item.HoDemSV</td>
+        <td class="text-center">@item.TenSV</td>
+        @if (item.GioiTinh == false)
+        {
+<td class="text-center">Nữ</td> }
+                else
+                {
+<td class="text-center">Nam</td>}
+        <td class="text-center">@item.Email</td>
+        <td class="text-center">@item.NgaySinh.Value.Day/@item.NgaySinh.Value.Month/@item.NgaySinh.Value.Year</td>
+        <td class="text-center">@item.MatKhau</td>
+        <td class="text-center">@item.Lop.TenLop</td>
+        <td class="text-center"><img src="~/Content/IMG/@item.HinhAnh" class="rounded-circle" style="width:70px; height:70px;" /></td>
+        <td class="text-center">
+            <a id="sua" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#mdlExam">
+                <i class="bi bi-brush"></i>
+            </a>
+            <a href="@Url.Action("DelTrash", new { id = item.MaSV})" class="btn btn-danger">
+                <i class="bi bi-trash-fill"></i>
+            </a>
+        </td>
+    </tr>
+}
+            </tbody>
+        </table>
+        <h5 id="view-bag">Số lượng sinh viên là: @ViewBag.SoLuong</h5>
+        <table class="table table-bordered table-hover table-a" id="search-result" style="display:none">
+            <thead>
+                <tr align='center'>
+                    <th class="text-center">Mã sinh viên</th>
+                    <th class="text-center">Họ đệm</th>
+                    <th class="text-center">Tên</th>
+                    <th class="text-center">Giới tính</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Ngày sinh</th>
+                    <th class="text-center">Mật khẩu</th>
+                    <th class="text-center">Lớp</th>
+                    <th class="text-center">Hình ảnh</th>
+                    <th class="text-center">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody id="main-data">
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<a href="@Url.Action("Index", "SinhViens")">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</a>
+<script type="text/javascript">
+$(document).on('click', '#sua', function () {
+        var trid = $(this).closest('tr').attr('id');
+        console.log(trid);
+        getmasv(trid);
+        $("#kiemtra").val(trid);
+    $("#txtMaGV").attr('readonly', true);
+});
+
+    function getmasv (makh){
+        $.ajax({
+            url: "@Url.Action("Getdata1", "SinhViens")",
+            type: "get", //pt get
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: {
+                id: makh   //truyền tham số có giá trị bằng id makhoa
+            },
+            success: function (data) {
+                var q = jQuery.parseJSON(data); // ép về kiểu javascrip
+                console.log(q);
+                $('#txtMa').val(q[0]['MaSV']);// gán vulue cho ô input txt
+                $('#txtHoDem').val(q[0]['HoDemSV']);
+                $('#txtTen').val(q[0]['TenSV']);
+                $('#txtEmail').val(q[0]['Email']);
+                console.log(q[0]['GioiTinh']);
+                $('#selectGT').val(q[0]['GioiTinh'].toString());
+                var a = moment(q[0]['NgaySinh'], "YYYY-MM-DD").format('YYYY-MM-DD');
+                console.log(a);
+                $('#datOpen').val(a);
+                $('#kiemtra1').val(q[0]['Malop']);
+
+                //$('#anh').val(q[0]['HinhAnh']);
+                $('#txtMatKhau').val(q[0]['MatKhau']);
+                var kt = $('#kiemtra1').val();
+
+
+                LoadDropLop(kt);
+
+            }
+        });
+    }
+    function LoadDropLop(a) {
+        $.ajax({
+            url: "@Url.Action("Getdata2", "SinhViens")",
+            type: "get", //pt get
+            dataType: "json",
+            success: function (data) {
+                // convert string to JS object
+                var obj = JSON.parse(data);
+                // lấy topic id đầu tiên gán cho txtTopicID
+               //$('#giatrian').val(obj[0]['MaKhoa'])
+                console.log(obj);
+                $("#select").empty();
+                if (a == "") {
+                    for (var i = 0; i < obj.length; i++) {
+                        let a = obj[i]["MaLop"];
+                        $("#select").append("<option value=" + a + " >"
+                            + obj[i]["TenLop"] + "</option>");
+                    }
+                }
+                else {
+                    for (var i = 0; i < obj.length; i++) {
+                        let malop = obj[i]["MaLop"];
+                        if (a == malop) {
+                            $("#select").append("<option value=" + malop + " selected='selected'>"
+                                + obj[i]["TenLop"] + "</option>");
+                        } else {
+                            $("#select").append("<option value=" + malop + ">"
+                                + obj[i]["TenLop"] + "</option>");
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    $(document).on('click', '#them', function () {
+        $('#txtMa').attr("readonly", false);
+        $('#txtMa').val('');
+        $('#txtHoDem').val('');// gán vulue cho ô input txt
+        $('#txtTen').val('');
+        $('#txtEmail').val('');
+        $('#select').val('');
+        $('#selectGT').val('true');
+        $('#datOpen').val('');
+        $('#txtMatKhau').val('');
+        $('#kiemtra').val('');
+        var a = "";
+        LoadDropLop(a);
+        console.log(moment());
+
+    });
+
+    $(document).on('click', '#btnSubmit', function () {
+        let makhoakiemtra = $('#kiemtra').val();
+        let masv=$('#txtMa').val();// gán vulue cho ô input txt
+        let hodem = $('#txtHoDem').val();
+        let ten = $('#txtTen').val();
+        let email=$('#txtEmail').val();
+        let lop = $('#select').val();
+        var gioitinh = $('#selectGT').val();
+        let matkhau=$('#txtMatKhau').val();
+        let ngaysinh = $('#datOpen').val();
+        let anh = $('#anh').val();
+        if (masv.length == 0 || lop.length == 0) {
+            alert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+        if (makhoakiemtra.length == 0) {
+            $.ajax({
+                url: '@Url.Action("AddData", "SinhViens")',
+                type: 'post',
+                data: {
+                    msv: masv,
+                    hodem: hodem,
+                    ten: ten,
+                    email: email,
+                    lop: lop,
+                    gt: gioitinh,
+                    mkh: matkhau,
+                    ns: ngaysinh,
+                    anh: anh
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            });
+        }
+        else {
+              $.ajax({
+                url: '@Url.Action("EditData", "SinhViens")',
+                type: 'post',
+                data: {
+                    msv: masv,
+                    hodem: hodem,
+                    ten: ten,
+                    email: email,
+                    lop: lop,
+                    gt: gioitinh,
+                    mkh: matkhau,
+                    ns: ngaysinh,
+                    anh: anh
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            });
+        }
+
+    });
+    $(document).ready(function () {
+        var inputElement = document.querySelector("#search");
+        console.log(inputElement);
+        inputElement.oninput = function (e) {
+            console.log(e.target.value);
+            search(e.target.value);
+        }
+    });
+
+    function search(keyword) {
+        $.ajax({
+             url: '@Url.Action("Getdata3", "SinhViens")',
+            type: 'post',
+            data: {
+                id: keyword,
+            },
+            success: function (data) {
+               var q = JSON.parse(data)
+                var htmldata = create(q)
+                if (keyword) {
+                    $("#result").css("display", "none");
+                    $("#search-result").css("display", "table");
+                    $("#view-bag").css("display", "none");
+                    $("#thea").css("display", "none");
+                    $("#main-data").html(htmldata);
+                    $(".pagination").css("display", "none");
+                } else {
+                    $("#result").css("display", "table");
+                    $("#search-result").css("display", "none");
+                    $("#view-bag").css("display", "flex");
+                    $(".pagination").css("display", "flex");
+                }
+            }
+            });
+    }
+
+    function create(data) {
+        let rows = [];
+
+        console.log(data);
+        for (var i = 0; i < data.length; i++)
+        {
+            if (data[i]['GioiTinh'] == true) {
+               var b = "Nam";
+            } else {
+                var b = "Nữ";
+            }
+            //let max = jQuery(".dname").find("tr td:eq(1)").val();
+            let row = `<tr id="${data[i]["MaSV"]}" class="dbname">
+        <td> ${data[i]["MaSV"]} </td>
+        <td> ${data[i]["HoDemSV"]} </td>
+        <td> ${data[i]["TenSV"]} </td>
+        <td>${b}</td>
+        <td>${data[i]["Email"]}</td>
+        <td>${data[i]["NgaySinh"]}</td>
+        <td>${data[i]["MatKhau"]}</td>
+        <td>${data[i]["TenLop"]}</td>
+        <td><img src="../Content/IMG/${data[i]["HinhAnh"]}"  class="rounded-circle" style="width:70px; height:70px;" /></td>
+        <td align="center"><a id="sua" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#mdlExam"><i class="bi bi-brush"></i> </a>
+       <button onclick="Xoa('${data[i]['MaSV']}')" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></td>
+        </tr>`;
+ if (data[i]["MaSV"]) {
+                rows.push(row);
+            }
+        }
+        return rows;
+    }
+    function Xoa(id) {
+
+        location = `/SinhViens/DelTrash/${id}`;
+    }
+</script>
+<div class="modal" id="mdlExam">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="mdlExamLabel">Sinh Viên</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="display: flex;flex-direction: column;align-items: center; justify-content:center">
+                <input type="hidden" id="kiemtra" value="">
+                <input type="hidden" id="kiemtrangay" value="">
+                <form>
+                    <div class="form-group">
+                        <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Mã sinh viên</label>
+                        <textarea class="form-control" id="txtMa" rows="1"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Họ đệm</label>
+                        <textarea class="form-control" id="txtHoDem" rows="1"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Tên</label>
+                        <textarea class="form-control" id="txtTen" rows="1"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="exampleFormControlFile1">Ảnh</label>
+                        <input type="file" class="form-control-file" id="anh">
+                    </div>
+                    <div class="form-group">
+                        <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Ngày sinh</label>
+                        <div>
+                            <input type="date" name="" id="datOpen">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txaName" class="form-label">Giới tính</label>
+                        <select class="form-select" id="selectGT" aria-label="Default select example">
+                            <option value="true" selected="selected">Nam</option>
+                            <option value="false">Nữ</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Email</label>
+                        <textarea class="form-control" id="txtEmail" rows="1"></textarea>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Mật khẩu</label>
+                        <textarea class="form-control" id="txtMatKhau" rows="1"></textarea>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="txaName" class="form-label" style="margin-bottom: 1px!important">Lớp</label>
+                        <select class="form-select" id="select" aria-label="Default select example">
+                        </select>
+                        <input type="hidden" id="kiemtra1" value="">
+
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <a class="nutbam nutbam--1" id="btnSubmit">Xác nhận</a>
+                    <button class="nutbam nutbam--1" data-bs-dismiss="modal">Trở về</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

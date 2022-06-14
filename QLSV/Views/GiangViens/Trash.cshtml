@@ -1,0 +1,87 @@
+﻿@model IEnumerable<QLSV.Models.GiangVien>
+@{
+    ViewBag.Title = "Trash";
+    Layout = "~/Views/Shared/_LayoutQLSV.cshtml";
+}
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <strong class="text-uppercase">Danh sách giảng viên</strong>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="@Url.Action("Index","GiangViens")" class="btn btn-success">
+                    <i class="bi bi-arrow-return-left"></i>Quay về trang chủ
+                </a>
+
+            </div>
+
+        </div>
+        <div class="card-body p-3">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr >
+                        <th  class="text-center">Mã giảng viên</th>
+                        <th  class="text-center">Họ tên </th>
+                        <th  class="text-center">Khoa</th>
+                        <th class="text-center">Giới tính</th>
+                        <th  class="text-center">Email</th>
+                        <th  class="text-center">SDT</th>
+                        <th  class="text-center">Mật khẩu</th>
+                        <th class="text-center">Trình độ</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+
+                        <td>@item.MaGV</td>
+                        <td>@item.HoTenGV</td>
+                        <td>@item.Khoa.TenKhoa</td>
+                        @if(@item.GioiTinh==true){
+                            <td>Nam</td>
+                        }else{
+                            <td>Nữ</td>
+                        }
+                        <td>@item.Email</td>
+                        <td>@item.SDT</td>
+                        <td>@item.MatKhau</td>
+                        <td>@item.TrinhDo</td>
+                       
+                        <td>
+
+                            <a href="@Url.Action("ReTrash", new {id=item.MaGV})" class="btn btn-warning">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </a>
+                            <button class="btn btn-danger" onclick="deletedata('@item.MaGV')"><i class="bi bi-x-circle-fill"></i></button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <h5>Số lượng giảng viên là: @ViewBag.SoLuong</h5>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        function deletedata(id){
+        console.log(id)
+        a = confirm('Bạn có muốn xóa giảng viên này?')
+        if (!a) {
+            return;
+        }
+          $.ajax({
+                url: '@Url.Action("Delete", "GiangViens")',
+                type: 'post',
+                data: {
+                    Id: id,
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            });
+    }
+</script>

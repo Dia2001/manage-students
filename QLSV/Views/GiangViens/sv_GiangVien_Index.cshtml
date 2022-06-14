@@ -1,0 +1,150 @@
+﻿@model IEnumerable<QLSV.Models.GiangVien>
+@{
+    ViewBag.Title = "sv_GiangVien_Index";
+    Layout = "~/Views/Shared/SV_Layout.cshtml";
+}
+<link href="~/Content/using.css" rel="stylesheet">
+<style>
+    .fi {
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;
+        color: black;
+        cursor: pointer;
+        display: inline-block;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 14px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .timkhoa {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tim-1 {
+        margin: 0 10px;
+        width: 30%;
+    }
+
+
+    .antuong-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .text-end-1 .thep {
+        margin: 0 10px;
+    }
+
+    .thep p {
+        position: relative;
+    }
+
+    .nutbam--1 {
+        background-color: #37497e;
+    }
+
+    .xuatfile {
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 10px 16px;
+        text-align: center;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        justify-content: center;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .nut-xuat-file {
+        float: right;
+    }
+
+    select {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        list-style: none;
+        text-align: center;
+        font-family: Cambria;
+        font-weight: bold;
+        color: aliceblue;
+    }
+
+    option {
+        color: black;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header mb-3">
+
+        <div class="form-wrapper">
+            <div class="header-content">
+                <strong style="font-size:30px;" class="text-uppercase">Danh sách giảng viên</strong>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-3">
+        <table class="table table-bordered table-hover" id="result">
+            <thead>
+                <tr>
+                    <th class="text-center">Mã giảng viên</th>
+                    <th class="text-center">Họ tên</th>
+                    <th class="text-center">Tên khoa</th>
+                    <th class="text-center">Giới tính</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">SĐT</th>
+                    <th class="text-center">Mật khẩu</th>
+                    <th class="text-center">Trình độ</th>
+                    <th class="text-center">Hình ảnh</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr id="@item.MaGV">
+                        <td>@item.MaGV</td>
+                        <td>@item.HoTenGV</td>
+                        <td>@item.Khoa.TenKhoa</td>
+                        @if (item.GioiTinh == false)
+                        {
+                            <td>Nữ</td>
+
+                        }
+                        else
+                        {
+                            <td> Nam</td>
+                        }
+                        <td>@item.Email</td>
+                        <td>@item.SDT</td>
+                        <td>@item.MatKhau</td>
+                        <td>@item.TrinhDo</td>
+                        <td><img src="~/Content/IMG/@item.HinhAnh" class="rounded-circle" style="width:70px;height:70px;" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

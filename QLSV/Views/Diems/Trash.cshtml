@@ -1,0 +1,91 @@
+﻿@model IEnumerable<QLSV.Models.Diem>
+@{
+    ViewBag.Title = "Trash";
+    Layout = "~/Views/Shared/_LayoutQLSV.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <strong class="text-uppercase">Danh sách điểm sinh viên</strong>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="@Url.Action("Index","Diems")" class="btn btn-success">
+                    <i class="bi bi-arrow-return-left"></i>Quay về trang chủ
+                </a>
+
+            </div>
+
+        </div>
+        <div class="card-body p-3">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Mã sinh viên</th>
+                        <th class="text-center">Họ đệm</th>
+                        <th class="text-center">Tên sinh viên</th>
+                        <th class="text-center">Tên môn học</th>
+                        <th class="text-center">Năm học</th>
+                        <th class="text-center">Học kỳ</th>
+                        <th class="text-center">Chuyên cần</th>
+                        <th class="text-center">Giữa kỳ</th>
+                        <th class="text-center">Cuối kỳ</th>
+                        <th class="text-center">DTB</th>
+                        <th class="text-center">Điểm chữ</th>
+                        <th class="text-center">Kết quả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.SinhVien.MaSV</td>
+                        <td>@item.SinhVien.HoDemSV</td>
+                        <td>@item.SinhVien.TenSV</td>
+                        <td>@item.MonHoc.TenMH</td>
+                        <td>@item.NamHoc</td>
+                        <td>@item.HocKy</td>
+                        <td>@item.DiemCC</td>
+                        <td>@item.DiemGK</td>
+                        <td>@item.DiemCK</td>
+                        <td>@item.DTB</td>
+                        <td>@item.DiemChu</td>
+                        <td><img class="rounded-circle" src="~/Content/IMG/@item.KetQua" /></td>
+                        <td>
+
+                            <a href="@Url.Action("ReTrash", new {id=item.Id})" class="btn btn-warning">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </a>
+                            <button class="btn btn-danger" onclick="deletedata(' @item.Id')"><i class="bi bi-x-circle-fill"></i></button>
+  
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <h5>Số lượng điểm các môn học của sinh viên là: @ViewBag.SoLuong</h5>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        function deletedata(id){
+        console.log(id)
+        a = confirm('Bạn có muốn xóa điểm sinh viên này?')
+        if (!a) {
+            return;
+        }
+          $.ajax({
+                url: '@Url.Action("Delete", "Diems")',
+                type: 'post',
+                data: {
+                    Id: id,
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            });
+    }
+</script>
+

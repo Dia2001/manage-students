@@ -1,0 +1,62 @@
+﻿@model List<QLSV.Models.GiangVien>
+<style>
+    thead {
+        background-color: #00FF00;
+        color: black
+    }
+
+    table {
+        width: 100%;
+        border: 1px solid black;
+        font-size: 50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    td, th {
+        padding: 5px;
+        font-size: 14px;
+    }
+    .rounded-circle {
+        width: 30px;
+        height: 30px;
+        background: #7fee1d;
+        -moz-border-radius: 60px;
+        -webkit-border-radius: 60px;
+        border-radius: 60px;
+    }
+</style>
+<table class="table table-bordered table-striped" border="1" style="border-color:black">
+    <thead>
+        <tr>
+            <th >Mã giảng viên</th>
+            <th >Họ tên</th>
+            <th>Tên khoa</th>
+            <th >Giới tính</th>
+            <th >Email</th>
+            <th >SĐT</th>
+            <th >Mật khẩu</th>
+            <th >Trình độ</th>
+            <th>Hình ảnh</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.MaGV</td>
+            <td>@item.HoTenGV</td>
+            <td>@item.Khoa.TenKhoa</td>
+            <td>@item.GioiTinh</td>
+            <td>@item.Email</td>
+            <td>@item.SDT</td>
+            <td>@item.MatKhau</td>
+            <td>@item.TrinhDo</td>
+            <td><img src="~/Content/IMG/@item.HinhAnh" class="rounded-circle" style="width:70px;height:70px;" /></td>
+        </tr>
+
+        }
+    </tbody>
+</table>
+
+

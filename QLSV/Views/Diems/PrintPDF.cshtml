@@ -1,0 +1,68 @@
+﻿@model List<QLSV.Models.Diem>
+<style>
+    thead {
+        background-color: #00FF00;
+        color: black
+    }
+
+    table {
+        width: 100%;
+        border: 1px solid black;
+        font-size: 50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    td, th {
+        padding: 5px;
+        font-size: 14px;
+    }
+    .rounded-circle {
+        width: 30px;
+        height: 30px;
+        background: #7fee1d;
+        -moz-border-radius: 60px;
+        -webkit-border-radius: 60px;
+        border-radius: 60px;
+    }
+</style>
+<table class="table table-bordered table-striped" border="1" style="border-color:black">
+    <thead>
+        <tr>
+            <th>Mã sinh viên</th>
+            <th>Họ đệm</th>
+            <th>Tên sinh viên</th>
+            <th>Tên môn học</th>
+            <th>Năm học</th>
+            <th>Học kỳ</th>
+            <th>Chuyên cần</th>
+            <th>Giữa kỳ</th>
+            <th>Cuối kỳ</th>
+            <th>ĐTB</th>
+            <th>Điểm chữ</th>
+            <th>Kết quả</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.SinhVien.MaSV</td>
+            <td>@item.SinhVien.HoDemSV</td>
+            <td>@item.SinhVien.TenSV</td>
+            <td>@item.MonHoc.TenMH</td>
+            <td>@item.NamHoc</td>
+            <td>@item.HocKy</td>
+            <td>@item.DiemCC</td>
+            <td>@item.DiemGK</td>
+            <td>@item.DiemCC</td>
+            <td>@item.DTB</td>
+            <td>@item.DiemChu</td>
+            <td><img class="rounded-circle" src="~/Content/IMG/@item.KetQua" /></td>
+        </tr>
+
+        }
+    </tbody>
+</table>
+
+

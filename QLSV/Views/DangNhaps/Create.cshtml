@@ -1,0 +1,160 @@
+﻿@model QLSV.Models.DangNhap
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng nhập</title>
+    <meta charset="UTF-8" />
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #eee;
+        }
+
+        .fom {
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            max-height: 720px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            padding: 20px 50px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1em;
+        }
+
+        h4 {
+            color: #00568F;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            justify-content: center;
+            font-family: 'Times New Roman', Times, serif;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .input_box {
+            margin-bottom: 15px;
+        }
+
+            .input_box input {
+                padding: 7.5px 15px;
+                width: 200px;
+                border: 1px solid #cccccc;
+                outline: none;
+            }
+
+        .btn-box {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+            .btn-box button {
+                width: 200px;
+                padding: 7.5px 15px;
+                border-radius: 2px;
+                /* màu nền */
+                background-color: #37497e;
+                /* màu chữ */
+                color: #ffffff;
+                border: none;
+                outline: none;
+            }
+
+        h5 {
+            font-size: 15px;
+            font-weight: 500;
+            color: #a9a9a9;
+            margin-bottom: 10px;
+        }
+
+        #h {
+            margin-bottom: 30px;
+            color: #a9a9a9;
+        }
+
+        .fi {
+            width: 200px;
+            appearance: none;
+            background-color: #E0FFFF;
+            border: 1px solid rgba(27, 31, 35, .15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+            box-sizing: border-box;
+            color: black;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 20px;
+            padding: 14px 16px;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: middle;
+            white-space: nowrap;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="fom">
+        <form action="" method="POST">
+            <img src="https://qnu.edu.vn/Resources/Images/0logoDHQNnew.jpg" alt="photo" />
+            <h4>TRƯỜNG ĐẠI HỌC QUY NHƠN</h4>
+            <h5>Cổng đăng ký</h5>
+            <p id="h">_________ _*_ __________</p>
+            <div class="input_box">
+                <input type="text" name="TenDN" placeholder="Tên đăng nhập" />
+            </div>
+            <div class="input_box">
+                <input type="password" name="MatKhau" placeholder="Mật khẩu" />
+            </div>
+            <div class="input_box">
+                <input type="password" name="MatKhauMoi" placeholder="Mật khẩu mới" />
+            </div>
+            <input class="fi" type="file" name="HinhAnh" />
+            <div class="input_box">
+                <input type="text" name="HoTen" placeholder="Nhập họ tên" />
+            </div>
+            <div class="input_box">
+                <input type="text" name="SDT" placeholder="Nhập số điện thoại" />
+            </div>
+            <div class="input_box">
+                <input type="text" name="Email" placeholder="Nhập email" />
+            </div>
+            <div class="input_box">
+                <input type="text" name="DiaChi" placeholder="Nhập địa chỉ" />
+            </div>
+            <label style="color:red;">@ViewBag.thongbao</label>
+            <div class="btn-box">
+                <button type="submit">Đăng ký</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
