@@ -223,6 +223,8 @@
     <Content Include="Content\IMG\ngayhoivieclam.jfif" />
     <Content Include="Content\IMG\the thao.jpg" />
     <Content Include="Content\IMG\thuvien1.jpg" />
+    <Content Include="Content\IMG\trangchu.PNG" />
+    <Content Include="Content\IMG\trangsinhvien.PNG" />
     <Content Include="Content\IMG\traohocbong.jfif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\phantrang.css" />
